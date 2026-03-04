@@ -1,0 +1,56 @@
+{
+  "channels": {
+    "slack": {
+      "enabled": true,
+      "webhook_url": "${SLACK_WEBHOOK_URL}",
+      "channel": "#agent-alerts"
+    },
+    "sms": {
+      "enabled": false,
+      "provider": "twilio",
+      "account_sid": "${TWILIO_ACCOUNT_SID}",
+      "auth_token": "${TWILIO_AUTH_TOKEN}",
+      "from_number": "${TWILIO_PHONE_NUMBER}",
+      "to_number": "${YOUR_PHONE_NUMBER}"
+    },
+    "email": {
+      "enabled": false,
+      "provider": "sendgrid",
+      "api_key": "${SENDGRID_API_KEY}",
+      "to": "${NOTIFICATION_EMAIL}"
+    }
+  },
+  "priority_rules": {
+    "critical": {
+      "channels": ["sms", "slack", "email"],
+      "escalate_after_minutes": 5,
+      "bypass_quiet_hours": true
+    },
+    "high": {
+      "channels": ["slack", "email"],
+      "escalate_after_minutes": 30,
+      "bypass_quiet_hours": true
+    },
+    "medium": {
+      "channels": ["slack"],
+      "batch_minutes": 15,
+      "quiet_hours_ok": true
+    },
+    "low": {
+      "channels": ["slack"],
+      "batch_minutes": 60,
+      "quiet_hours_ok": true
+    }
+  },
+  "quiet_hours": {
+    "enabled": true,
+    "start": "22:00",
+    "end": "08:00",
+    "timezone": "America/New_York"
+  },
+  "learning": {
+    "enabled": true,
+    "track_engagement": true,
+    "adapt_after_days": 7
+  }
+}
