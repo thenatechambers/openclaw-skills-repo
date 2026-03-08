@@ -1,0 +1,13 @@
+# OpenClaw Proactive Agent Crontab
+
+# Morning briefing at 8 AM
+0 8 * * * /usr/local/bin/openclaw heartbeat morning
+
+# Mid-day check at 1 PM
+0 13 * * * /usr/local/bin/openclaw heartbeat midday
+
+# Evening wrap-up at 6 PM
+0 18 * * * /usr/local/bin/openclaw heartbeat evening
+
+# Continuous heartbeat every 30 minutes
+*/30 * * * * /usr/local/bin/openclaw heartbeat --isolated continuous

@@ -1,0 +1,13 @@
+{
+  "routing": {
+    "critical": ["phone_call", "whatsapp"],
+    "urgent": ["whatsapp"],
+    "normal": ["discord"],
+    "background": ["discord"]
+  },
+  "templates": {
+    "urgent": "🚨 {message}",
+    "normal": "📋 {message}",
+    "background": "💡 {message}"
+  }
+}
