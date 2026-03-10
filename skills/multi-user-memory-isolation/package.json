@@ -1,0 +1,12 @@
+{
+  "name": "multi-user-memory-isolation",
+  "version": "1.0.0",
+  "description": "Lightweight user isolation for shared OpenClaw agents",
+  "main": "isolation.js",
+  "scripts": {
+    "test": "echo 'Run tests in OpenClaw environment'"
+  },
+  "keywords": ["openclaw", "skill", "multi-user", "isolation", "team"],
+  "author": "Cortex Team",
+  "license": "MIT"
+}
