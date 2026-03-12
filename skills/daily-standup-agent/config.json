@@ -1,0 +1,22 @@
+{
+  "github": {
+    "repos": [],
+    "username": ""
+  },
+  "slack": {
+    "channels": ["#general"],
+    "lookback_hours": 24
+  },
+  "calendar": {
+    "id": "primary",
+    "include_description": false
+  },
+  "output": {
+    "format": "markdown",
+    "destination": "stdout"
+  },
+  "memory": {
+    "path": "~/.openclaw/memory/standup-history.json",
+    "retention_days": 30
+  }
+}
