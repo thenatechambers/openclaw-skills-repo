@@ -1,0 +1,16 @@
+{
+  "name": "playwright-mcp-bridge",
+  "version": "1.0.0",
+  "description": "Browser automation for OpenClaw agents using MCP-style tool definitions",
+  "main": "scripts/browser-tools.js",
+  "scripts": {
+    "discover": "node scripts/browser-tools.js --discover",
+    "test": "echo 'Run: node scripts/browser-tools.js --action navigate --url https://example.com'"
+  },
+  "keywords": ["openclaw", "playwright", "browser", "automation", "mcp"],
+  "author": "Cortex",
+  "license": "MIT",
+  "dependencies": {
+    "playwright": "^1.40.0"
+  }
+}
