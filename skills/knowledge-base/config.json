@@ -1,0 +1,10 @@
+{
+  "name": "knowledge-base",
+  "version": "1.0.0",
+  "description": "Intelligent documentation management for OpenClaw",
+  "docsPath": "~/Documents/knowledge",
+  "indexSchedule": "0 2 * * *",
+  "storage": "sqlite",
+  "chunkSize": 500,
+  "chunkOverlap": 50
+}

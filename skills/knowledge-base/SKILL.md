@@ -1,94 +1,145 @@
 ---
 name: knowledge-base
-description: Intelligent documentation skill that organizes, indexes, and retrieves knowledge from your workspace. Automatically catalogs files, extracts key insights, and provides semantic search across your personal knowledge base. Perfect for researchers, writers, and anyone drowning in disorganized notes.
+description: Intelligent documentation management for OpenClaw. Index, search, and query your Markdown notes, documentation, and knowledge files using semantic search. Auto-indexes files on schedule, supports natural language queries, and surfaces relevant context when you need it.
 ---
 
 # Knowledge Base Skill
 
-Turn your chaotic workspace into an intelligent, searchable knowledge system. This skill automatically indexes your files, extracts key insights, and lets you query your knowledge base using natural language.
+## Purpose
 
-## What It Does
+Turn your scattered documentation into an intelligent, queryable knowledge base. This skill:
+- Automatically indexes your Markdown files and documentation
+- Enables semantic search across your entire knowledge corpus  
+- Surfaces relevant context based on natural language queries
+- Maintains your knowledge base with automatic re-indexing
 
-- **Auto-Indexes Files**: Scans markdown, text, and code files in your workspace
-- **Extracts Key Insights**: Pulls out important facts, decisions, and action items
-- **Semantic Search**: Find information even when you don't remember exact filenames
-- **Knowledge Graph**: Tracks relationships between topics, projects, and ideas
-- **Daily Summaries**: Get briefings on what you worked on and what's pending
-
-## Why You Need This
-
-If you're like most knowledge workers, you have:
-- Hundreds of notes scattered across folders
-- No idea where you saved that brilliant idea from last month
-- Duplicate research because you forgot you already looked something up
-- A "read later" pile that never gets read
-
-This skill fixes that by making your knowledge base work for you, not against you.
-
-## Quick Start
-
-1. Install the skill to your OpenClaw agent
-2. Run `kb:init` to index your workspace
-3. Use `kb:search "your query"` to find anything
-4. Run `kb:daily` for a morning briefing on your knowledge
-
-## Usage Examples
-
-```bash
-# Index your workspace
-kb:init
-
-# Search across all your notes
-kb:search "Q4 marketing strategy"
-
-# Find all decisions you made last week
-kb:search "decided" --since 7d
-
-# Get a summary of a specific project
-kb:summarize --project "cortex-migration"
-
-# Daily knowledge briefing
-kb:daily
-```
-
-## Configuration
-
-Add to your `config.yml`:
-
-```yaml
-knowledge_base:
-  index_paths:
-    - ./notes
-    - ./research
-    - ./projects
-  exclude_patterns:
-    - "*.tmp"
-    - "node_modules/"
-    - ".git/"
-  auto_index: true
-  index_frequency: "daily"
-```
-
-## How It Works
-
-1. **File Discovery**: Recursively scans configured paths for indexable files
-2. **Content Parsing**: Extracts text from markdown, code, and plain text files
-3. **Insight Extraction**: Uses LLM to identify key facts, decisions, and TODOs
-4. **Vector Indexing**: Creates embeddings for semantic search capability
-5. **Relationship Mapping**: Links related topics and cross-references
-
-## Integration with Other Skills
-
-- **Calendar Brief**: Includes relevant knowledge in your daily brief
-- **Meeting Assistant**: Links meeting notes to related project docs
-- **Smart Notify**: Alerts you when you haven't reviewed important topics
+Perfect for teams and individuals who need to organize documentation, notes, wikis, and reference materials.
 
 ## Requirements
 
-- OpenClaw agent with file system access
-- Vector database (Supabase pgvector recommended)
-- Optional: Tavily API for web research linking
+- OpenClaw with file system access
+- Node.js 18+ (for indexing scripts)
+- Storage for index (local SQLite or Supabase)
 
-## License
+## Installation
 
-MIT - Free for personal and commercial use.
+1. Copy this skill to your OpenClaw skills directory:
+   ```bash
+   cp -r skills/knowledge-base ~/.openclaw/skills/
+   ```
+
+2. Configure your knowledge base in `config.json`:
+   ```json
+   {
+     "docsPath": "~/Documents/knowledge",
+     "indexSchedule": "0 2 * * *",
+     "storage": "sqlite"
+   }
+   ```
+
+3. Run initial index:
+   ```bash
+   node ~/.openclaw/skills/knowledge-base/scripts/index.mjs
+   ```
+
+## Usage
+
+### Natural Language Queries
+
+Ask your knowledge base questions directly:
+
+```
+"What was our Q1 revenue target?"
+"Find the deployment procedure for the API"
+"Summarize our customer onboarding process"
+"What did we decide about the pricing model?"
+```
+
+### Programmatic Search
+
+Use the search API in your skills:
+
+```javascript
+import { searchKnowledgeBase } from './lib/search.mjs';
+
+const results = await searchKnowledgeBase({
+  query: "deployment checklist",
+  limit: 5,
+  threshold: 0.7
+});
+```
+
+### Auto-Index Scheduling
+
+The skill automatically re-indexes your docs on the schedule you set. This keeps the search current without manual work.
+
+## How It Works
+
+1. **Indexing**: Reads all `.md` files in your docs path
+2. **Chunking**: Splits documents into semantic chunks
+3. **Embedding**: Generates vector embeddings for each chunk
+4. **Storage**: Saves to SQLite (local) or Supabase (shared)
+5. **Query**: Converts questions to embeddings, finds nearest neighbors
+
+## Configuration Options
+
+| Option | Default | Description |
+|--------|---------|-------------|
+| `docsPath` | `~/Documents` | Path to your Markdown files |
+| `indexSchedule` | `"0 2 * * *"` | Cron schedule for re-indexing |
+| `storage` | `"sqlite"` | `sqlite` or `supabase` |
+| `chunkSize` | `500` | Characters per chunk |
+| `chunkOverlap` | `50` | Overlap between chunks |
+
+## Example Queries
+
+**Finding Information:**
+- "What are our brand colors?"
+- "Find the API authentication docs"
+- "What's the procedure for incident response?"
+
+**Synthesis:**
+- "Summarize all meeting notes from March"
+- "What decisions did we make about the migration?"
+- "List all action items assigned to me"
+
+**Discovery:**
+- "What documentation exists about the checkout flow?"
+- "Find anything related to GDPR compliance"
+- "Show me notes about customer feedback"
+
+## Files
+
+```
+knowledge-base/
+├── SKILL.md              # This file
+├── config.json           # Your configuration
+├── scripts/
+│   ├── index.mjs        # Manual indexing script
+│   └── query.mjs        # CLI query tool
+└── lib/
+    ├── search.mjs       # Search API
+    ├── embed.mjs        # Embedding generation
+    └── store.mjs        # Storage abstraction
+```
+
+## Troubleshooting
+
+**No results for common queries:**
+- Check that your docsPath is correct
+- Run manual index: `node scripts/index.mjs`
+- Verify files are `.md` format
+
+**Slow queries:**
+- Reduce chunk size in config
+- Use SQLite for local-only setups
+- Add filters to narrow search scope
+
+**Outdated results:**
+- Index schedule may need adjustment
+- Run manual re-index to refresh
+- Check file permissions on docsPath
+
+## Credits
+
+Built for the OpenClaw community by Cortex. Inspired by the need to make documentation actually searchable.
