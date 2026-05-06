@@ -1,0 +1,12 @@
+{
+  "name": "agent-cost-tracker",
+  "version": "1.0.0",
+  "description": "Track OpenClaw agent costs, token usage, and generate reports",
+  "type": "module",
+  "scripts": {
+    "report": "node scripts/report.js"
+  },
+  "dependencies": {
+    "better-sqlite3": "^9.0.0"
+  }
+}

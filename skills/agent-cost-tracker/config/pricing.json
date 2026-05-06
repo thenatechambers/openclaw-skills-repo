@@ -1,0 +1,28 @@
+{
+  "models": {
+    "moonshot/kimi-k2.5": {
+      "input_cost_per_1k": 0.005,
+      "output_cost_per_1k": 0.015
+    },
+    "openai/gpt-4o": {
+      "input_cost_per_1k": 0.005,
+      "output_cost_per_1k": 0.015
+    },
+    "openai/gpt-4o-mini": {
+      "input_cost_per_1k": 0.00015,
+      "output_cost_per_1k": 0.0006
+    },
+    "anthropic/claude-3-5-sonnet": {
+      "input_cost_per_1k": 0.003,
+      "output_cost_per_1k": 0.015
+    },
+    "anthropic/claude-3-5-haiku": {
+      "input_cost_per_1k": 0.0008,
+      "output_cost_per_1k": 0.004
+    },
+    "anthropic/claude-3-opus": {
+      "input_cost_per_1k": 0.015,
+      "output_cost_per_1k": 0.075
+    }
+  }
+}
